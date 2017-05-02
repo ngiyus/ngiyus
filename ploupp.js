@@ -9,11 +9,18 @@ admin.initializeApp({
 
 var db = admin.database();
 var ref = db.ref("users");
-const port = 80;
+const port = 8081;
 
 
 var express = require('express');
 var app = express();
+app.get('/user/', function (request, response) {
+  ref.once("value", function(snapshot) {
+    console.log(snapshot.val());
+    response.json(snapshot.val());
+
+  });
+});
 
 app.get('/user/:uid', function (request, response) {
 
